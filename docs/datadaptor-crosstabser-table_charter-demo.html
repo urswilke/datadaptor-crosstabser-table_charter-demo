@@ -167,10 +167,10 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Please be patient! It will take a little while until everything is set up and you can run the code in the interactive cells.</p>
+<p>Please be patient! It will take a little while until everything is set up and you can run the code in the interactive cells.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
 </div>
 </div>
-<p>This is the interactive demo-repo to show how the combination of the packages <a href="https://gitlab.com/urswilke/datadaptor">datadaptor</a>, <a href="https://gitlab.com/urswilke/crosstabser">crosstabser</a> &amp; <a href="https://gitlab.com/urswilke/table_charter">table_charter</a> can be used to calculate crosstabs from labelled survey data (or any data.frame).</p>
+<p>This interactive demo shows how the combination of the R packages <a href="https://gitlab.com/urswilke/datadaptor">datadaptor</a> &amp; <a href="https://gitlab.com/urswilke/crosstabser">crosstabser</a> can be used to calculate crosstabs from labelled survey data (or any data.frame). In the javascript <a href="https://gitlab.com/urswilke/table_charter">table_charter</a> app you can then interactively create plots of the crosstabs.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -184,17 +184,23 @@ Note
 <p>Running the code cell in <a href="#sec-calc-ct" class="quarto-xref">Section&nbsp;4</a> will recalculate the crosstabs &amp; update the table_charter app in <a href="#sec-tab-ch" class="quarto-xref">Section&nbsp;5</a>.</p>
 </div>
 </div>
+<p>We’ll load some R packages:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(datadaptor)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(crosstabser)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(haven)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
 <section id="survey-data" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="survey-data"><span class="header-section-number">2</span> Survey data</h2>
-<p>This is a toy example for survey data <code>df</code>. Typically, you would receive this data is an SPSS .sav file:</p>
+<p>This is a toy example for survey data <code>df</code>. Typically, you would receive this data in an SPSS .sav file:</p>
 <div class="cell" data-autorun="true">
 <div>
 <div id="webr-1" class="exercise-cell">
 
 </div>
 <script type="webr-1-contents">
-eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiZGYgPC0gdGliYmxlOjp0aWJibGUoXG4gICAgcTFfMSA9IGMoMSwgMCwgMCwgMCwgMSkgfD4gaGF2ZW46OmxhYmVsbGVkKGMoU2VsZWN0ZWQgPSAxLCBVbnNlbGVjdGVkID0gMCksIGxhYmVsID0gXCJDaG9pY2UgMSAmIDJcIiksXG4gICAgcTFfMiA9IGMoMSwgMSwgMCwgMSwgMCkgfD4gaGF2ZW46OmxhYmVsbGVkKGMoU2VsZWN0ZWQgPSAxLCBVbnNlbGVjdGVkID0gMCksIGxhYmVsID0gXCJDaG9pY2UgMSAmIDJcIiksXG4gICAgcTFfMyA9IGMoMCwgMSwgMCwgMCwgMCkgfD4gaGF2ZW46OmxhYmVsbGVkKGMoU2VsZWN0ZWQgPSAxLCBVbnNlbGVjdGVkID0gMCksIGxhYmVsID0gXCJDaG9pY2UgMyAmIDRcIiksXG4gICAgcTFfNCA9IGMoMSwgMSwgMSwgMSwgMSkgfD4gaGF2ZW46OmxhYmVsbGVkKGMoU2VsZWN0ZWQgPSAxLCBVbnNlbGVjdGVkID0gMCksIGxhYmVsID0gXCJDaG9pY2UgMyAmIDRcIiksXG4gICAgcTFuMSA9IGMoMSwgMiwgMywgMiwgMykgfD4gaGF2ZW46OmxhYmVsbGVkKGMoY2gxPTEsIGNoMj0yLCBjaDMgPSAzLCBjaDQ9NCksIGxhYmVsID0gXCJDaG9pY2UgMSAmIDJcIiksXG4gICAgcTFuMiA9IGMoMiwtMiwgNCwtMiwgNCkgfD4gaGF2ZW46OmxhYmVsbGVkKGMoY2gxPTEsIGNoMj0yLCBjaDMgPSAzLCBjaDQ9NCksIGxhYmVsID0gXCJDaG9pY2UgMSAmIDJcIiksXG4gICAgcTFuMyA9IGMoMyxOQSwtMiwgMSwtMikgfD4gaGF2ZW46OmxhYmVsbGVkKGMoY2gxPTEsIGNoMj0yLCBjaDMgPSAzLCBjaDQ9NCksIGxhYmVsID0gXCJDaG9pY2UgMyAmIDRcIiksXG4gICAgcTFuNCA9IGMoNCwtMiwtMiwgMywtMikgfD4gaGF2ZW46OmxhYmVsbGVkKGMoY2gxPTEsIGNoMj0yLCBjaDMgPSAzLCBjaDQ9NCksIGxhYmVsID0gXCJDaG9pY2UgMyAmIDRcIiksXG4gICAgYWdlICA9IGMoMiwgMSwgMywgMywgMikgfD4gaGF2ZW46OmxhYmVsbGVkKGMoXCIxOC0zOVwiID0gMSwgXCI0MC01OVwiID0gMiwgXCI2MCtcIiA9IDMpLCBsYWJlbCA9IFwiYWdlXCIpLFxuICAgIHNlbDEgPSBjKDEsIDIsIDMsIDIsIDMpIHw+IGhhdmVuOjpsYWJlbGxlZChjKFwic2VsMVwiID0gMSwgXCJzZWwyXCIgPSAyLCBzZWwzID0gMykpLFxuICAgIHNlbDIgPSBjKDEsIDMsIDIsIDEsIDIpIHw+IGhhdmVuOjpsYWJlbGxlZChjKFwic2VsMVwiID0gMSwgXCJzZWwyXCIgPSAyLCBzZWwzID0gMykpLFxuICAgIGdldyA9IGMoMC41LCAxLjIsIDAuNCwgMC45LCAxLjMpXG4pXG5kZiJ9
+eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiZGYgPC0gdGliYmxlOjp0aWJibGUoXG4gICAgcTFfMSA9IGMoMSwgMCwgMCwgMCwgMSkgfD4gbGFiZWxsZWQoYyhTZWxlY3RlZCA9IDEsIFVuc2VsZWN0ZWQgPSAwKSwgbGFiZWwgPSBcIkNob2ljZSAxICYgMlwiKSxcbiAgICBxMV8yID0gYygxLCAxLCAwLCAxLCAwKSB8PiBsYWJlbGxlZChjKFNlbGVjdGVkID0gMSwgVW5zZWxlY3RlZCA9IDApLCBsYWJlbCA9IFwiQ2hvaWNlIDEgJiAyXCIpLFxuICAgIHExXzMgPSBjKDAsIDEsIDAsIDAsIDApIHw+IGxhYmVsbGVkKGMoU2VsZWN0ZWQgPSAxLCBVbnNlbGVjdGVkID0gMCksIGxhYmVsID0gXCJDaG9pY2UgMyAmIDRcIiksXG4gICAgcTFfNCA9IGMoMSwgMSwgMSwgMSwgMSkgfD4gbGFiZWxsZWQoYyhTZWxlY3RlZCA9IDEsIFVuc2VsZWN0ZWQgPSAwKSwgbGFiZWwgPSBcIkNob2ljZSAzICYgNFwiKSxcbiAgICBxMW4xID0gYygxLCAyLCAzLCAyLCAzKSB8PiBsYWJlbGxlZChjKGNoMT0xLCBjaDI9MiwgY2gzID0gMywgY2g0PTQpLCBsYWJlbCA9IFwiQ2hvaWNlIDEgJiAyXCIpLFxuICAgIHExbjIgPSBjKDIsLTIsIDQsLTIsIDQpIHw+IGxhYmVsbGVkKGMoY2gxPTEsIGNoMj0yLCBjaDMgPSAzLCBjaDQ9NCksIGxhYmVsID0gXCJDaG9pY2UgMSAmIDJcIiksXG4gICAgcTFuMyA9IGMoMyxOQSwtMiwgMSwtMikgfD4gbGFiZWxsZWQoYyhjaDE9MSwgY2gyPTIsIGNoMyA9IDMsIGNoND00KSwgbGFiZWwgPSBcIkNob2ljZSAzICYgNFwiKSxcbiAgICBxMW40ID0gYyg0LC0yLC0yLCAzLC0yKSB8PiBsYWJlbGxlZChjKGNoMT0xLCBjaDI9MiwgY2gzID0gMywgY2g0PTQpLCBsYWJlbCA9IFwiQ2hvaWNlIDMgJiA0XCIpLFxuICAgIGFnZSAgPSBjKDIsIDEsIDMsIDMsIDIpIHw+IGxhYmVsbGVkKGMoXCIxOC0zOVwiID0gMSwgXCI0MC01OVwiID0gMiwgXCI2MCtcIiA9IDMpLCBsYWJlbCA9IFwiYWdlXCIpLFxuICAgIHNlbDEgPSBjKDEsIDIsIDMsIDIsIDMpIHw+IGxhYmVsbGVkKGMoXCJzZWwxXCIgPSAxLCBcInNlbDJcIiA9IDIsIHNlbDMgPSAzKSksXG4gICAgc2VsMiA9IGMoMSwgMywgMiwgMSwgMikgfD4gbGFiZWxsZWQoYyhcInNlbDFcIiA9IDEsIFwic2VsMlwiID0gMiwgc2VsMyA9IDMpKSxcbiAgICBnZXcgPSBjKDAuNSwgMS4yLCAwLjQsIDAuOSwgMS4zKVxuKVxuZGYifQ==
 </script>
 </div>
 </div>
@@ -226,7 +232,7 @@ eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiQ29s
 </section>
 <section id="sec-calc-ct" class="level2" data-number="4">
 <h2 data-number="4" class="anchored" data-anchor-id="sec-calc-ct"><span class="header-section-number">4</span> Calculate crosstabs</h2>
-<p>If you have modified the input data above, running this cell will reprint the calculated crosstabs (running the crosstabser R package in RStudio will give you a color-formatted print output), and recalculate the according data input for the table_charter app at the bottom of this website:</p>
+<p>If you have modified the input data above, running this cell will reprint<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> the calculated crosstabs, and recalculate the according data input for the table_charter app at the bottom of this website:</p>
 <div class="cell" data-autorun="true" data-define="data_string">
 <div>
 <div id="webr-4" class="exercise-cell">
@@ -240,8 +246,18 @@ eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImRlZmluZSI6WyJkYXRhX3N0cmluZyJdLCJlZGl0Ijp0cnVl
 </section>
 <section id="sec-tab-ch" class="level2" data-number="5">
 <h2 data-number="5" class="anchored" data-anchor-id="sec-tab-ch"><span class="header-section-number">5</span> table_charter</h2>
+<p>The table_charter app can be included in an html file by loading the package’s source code with for instance:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1" data-startfrom="122" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 121;"><span id="cb1-122"><a href="#cb1-122" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;table-charter data='</span><span class="sc">${</span>data_string<span class="sc">}</span><span class="vs">'&gt;&lt;/table-charter&gt;`</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">script</span><span class="ot"> type=</span><span class="st">"module"</span><span class="dt">&gt;</span> </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="im">import</span> { TableCharter } <span class="im">from</span> <span class="st">"https://unpkg.com/table_charter/dist/main.es.js"</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>and then adding a <code>&lt;table-charter&gt;</code> html tag with the crosstab data from R as its data attribute<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3" data-startfrom="166" data-source-offset="9"><pre class="sourceCode java code-with-copy"><code class="sourceCode java" style="counter-reset: source-line 165;"><span id="cb3-166"><a href="#cb3-166" aria-hidden="true" tabindex="-1"></a>```<span class="op">{</span>ojs<span class="op">}</span></span>
+<span id="cb3-167"><a href="#cb3-167" aria-hidden="true" tabindex="-1"></a><span class="co">//| echo: fenced</span></span>
+<span id="cb3-168"><a href="#cb3-168" aria-hidden="true" tabindex="-1"></a>html`<span class="op">&lt;</span>table<span class="op">-</span>charter data<span class="op">=</span><span class="er">'</span>$<span class="op">{</span>data_string<span class="op">}</span><span class="er">'</span><span class="op">&gt;&lt;/</span>table<span class="op">-</span>charter<span class="op">&gt;</span>`</span>
+<span id="cb3-169"><a href="#cb3-169" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-1" data-nodetype="expression">
 
@@ -269,7 +285,15 @@ W10=
 </script>
 </section>
 
-</main> <!-- /main -->
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>This website is built with the <a href="https://r-wasm.github.io/quarto-live/">quarto-live</a> extension and the <a href="https://github.com/r-wasm/webr/">webr</a> wasm versions of the R packages from <a href="https://urswilke.r-universe.dev/builds">R-universe</a>. If you install the R packages on your PC, the code runs much faster.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Unlike this wasm version in your browser, running the crosstabser R package in RStudio will give you a color-formatted print output.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Here we use <a href="https://observablehq.com/@observablehq/htl">observable’s hypertext literal</a> to generate the html in a quarto ojs cell.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
 <script type="ojs-module-contents">
 eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6Imh0bWxgPHRhYmxlLWNoYXJ0ZXIgZGF0YT0nJHtkYXRhX3N0cmluZ30nPjwvdGFibGUtY2hhcnRlcj5gXG4ifV19
 </script>

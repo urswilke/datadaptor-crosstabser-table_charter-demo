@@ -4,21 +4,21 @@
     "href": "datadaptor-crosstabser-table_charter-demo.html",
     "title": "datadaptor-crosstabser-table_charter-demo",
     "section": "",
-    "text": "Note\n\n\n\nPlease be patient! It will take a little while until everything is set up and you can run the code in the interactive cells.\n\n\nThis is the interactive demo-repo to show how the combination of the packages datadaptor, crosstabser & table_charter can be used to calculate crosstabs from labelled survey data (or any data.frame).\n\n\n\n\n\n\nNote\n\n\n\nRunning the code cell in Section 4 will recalculate the crosstabs & update the table_charter app in Section 5."
+    "text": "Note\n\n\n\nPlease be patient! It will take a little while until everything is set up and you can run the code in the interactive cells.1\n\n\nThis interactive demo shows how the combination of the R packages datadaptor & crosstabser can be used to calculate crosstabs from labelled survey data (or any data.frame). In the javascript table_charter app you can then interactively create plots of the crosstabs.\n\n\n\n\n\n\nNote\n\n\n\nRunning the code cell in Section 4 will recalculate the crosstabs & update the table_charter app in Section 5.\n\n\nWe’ll load some R packages:\n\nlibrary(datadaptor)\nlibrary(crosstabser)\nlibrary(haven)"
   },
   {
     "objectID": "datadaptor-crosstabser-table_charter-demo.html#introduction",
     "href": "datadaptor-crosstabser-table_charter-demo.html#introduction",
     "title": "datadaptor-crosstabser-table_charter-demo",
     "section": "",
-    "text": "Note\n\n\n\nPlease be patient! It will take a little while until everything is set up and you can run the code in the interactive cells.\n\n\nThis is the interactive demo-repo to show how the combination of the packages datadaptor, crosstabser & table_charter can be used to calculate crosstabs from labelled survey data (or any data.frame).\n\n\n\n\n\n\nNote\n\n\n\nRunning the code cell in Section 4 will recalculate the crosstabs & update the table_charter app in Section 5."
+    "text": "Note\n\n\n\nPlease be patient! It will take a little while until everything is set up and you can run the code in the interactive cells.1\n\n\nThis interactive demo shows how the combination of the R packages datadaptor & crosstabser can be used to calculate crosstabs from labelled survey data (or any data.frame). In the javascript table_charter app you can then interactively create plots of the crosstabs.\n\n\n\n\n\n\nNote\n\n\n\nRunning the code cell in Section 4 will recalculate the crosstabs & update the table_charter app in Section 5.\n\n\nWe’ll load some R packages:\n\nlibrary(datadaptor)\nlibrary(crosstabser)\nlibrary(haven)"
   },
   {
     "objectID": "datadaptor-crosstabser-table_charter-demo.html#survey-data",
     "href": "datadaptor-crosstabser-table_charter-demo.html#survey-data",
     "title": "datadaptor-crosstabser-table_charter-demo",
     "section": "2 Survey data",
-    "text": "2 Survey data\nThis is a toy example for survey data df. Typically, you would receive this data is an SPSS .sav file:"
+    "text": "2 Survey data\nThis is a toy example for survey data df. Typically, you would receive this data in an SPSS .sav file:"
   },
   {
     "objectID": "datadaptor-crosstabser-table_charter-demo.html#syntax-to-generate-crosstabs",
@@ -32,13 +32,20 @@
     "href": "datadaptor-crosstabser-table_charter-demo.html#sec-calc-ct",
     "title": "datadaptor-crosstabser-table_charter-demo",
     "section": "4 Calculate crosstabs",
-    "text": "4 Calculate crosstabs\nIf you have modified the input data above, running this cell will reprint the calculated crosstabs (running the crosstabser R package in RStudio will give you a color-formatted print output), and recalculate the according data input for the table_charter app at the bottom of this website:"
+    "text": "4 Calculate crosstabs\nIf you have modified the input data above, running this cell will reprint2 the calculated crosstabs, and recalculate the according data input for the table_charter app at the bottom of this website:"
   },
   {
     "objectID": "datadaptor-crosstabser-table_charter-demo.html#sec-tab-ch",
     "href": "datadaptor-crosstabser-table_charter-demo.html#sec-tab-ch",
     "title": "datadaptor-crosstabser-table_charter-demo",
     "section": "5 table_charter",
-    "text": "5 table_charter\n\nhtml`&lt;table-charter data='${data_string}'&gt;&lt;/table-charter&gt;`"
+    "text": "5 table_charter\nThe table_charter app can be included in an html file by loading the package’s source code with for instance:\n\n&lt;script type=\"module\"&gt; \n  import { TableCharter } from \"https://unpkg.com/table_charter/dist/main.es.js\"\n&lt;/script&gt;\n\nand then adding a &lt;table-charter&gt; html tag with the crosstab data from R as its data attribute3:\n\n```{ojs}\n//| echo: fenced\nhtml`&lt;table-charter data='${data_string}'&gt;&lt;/table-charter&gt;`\n```"
+  },
+  {
+    "objectID": "datadaptor-crosstabser-table_charter-demo.html#footnotes",
+    "href": "datadaptor-crosstabser-table_charter-demo.html#footnotes",
+    "title": "datadaptor-crosstabser-table_charter-demo",
+    "section": "Footnotes",
+    "text": "Footnotes\n\n\nThis website is built with the quarto-live extension and the webr wasm versions of the R packages from R-universe. If you install the R packages on your PC, the code runs much faster.↩︎\nUnlike this wasm version in your browser, running the crosstabser R package in RStudio will give you a color-formatted print output.↩︎\nHere we use observable’s hypertext literal to generate the html in a quarto ojs cell.↩︎"
   }
 ]
