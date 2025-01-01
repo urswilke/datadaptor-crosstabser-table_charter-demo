@@ -1,0 +1,9 @@
+[
+  {
+    "objectID": "datadaptor-crosstabser-table_charter-demo.html",
+    "href": "datadaptor-crosstabser-table_charter-demo.html",
+    "title": "quarto-webr-datadaptor-test",
+    "section": "",
+    "text": "Please be patient! It will take a little while until everything is set up and you can run the code in the interactive cells and the table_charter app in the bottom updates accordingly.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nhtml`\n  &lt;table-charter data='${data_string}'&gt;&lt;/table-charter&gt;\n`"
+  }
+]

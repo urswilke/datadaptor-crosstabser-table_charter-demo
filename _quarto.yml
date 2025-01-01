@@ -1,0 +1,7 @@
+project:
+  title: "quarto-webr-datadaptor-test"
+  type: website
+  output-dir: docs
+
+
+
