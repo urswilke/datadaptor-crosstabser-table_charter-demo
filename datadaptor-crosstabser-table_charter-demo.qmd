@@ -1,8 +1,14 @@
 ---
 title: "datadaptor-crosstabser-table_charter-demo"
+project:
+  type: website
 format: 
   live-html:
     page-layout: full
+    code-links: repo
+    toc: true
+    toc-location: left
+    number-sections: true
 engine: knitr
 webr:
   repos:
@@ -19,12 +25,13 @@ include-before-body:
 
 {{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
 
+
+## Introduction
+
 ::: {.callout-note}
 Please be patient! It will take a little while until everything is set up 
 and you can run the code in the interactive cells.
 :::
-
-## Introduction
 
 This is the interactive demo-repo to show how the combination of the packages
 [datadaptor](https://gitlab.com/urswilke/datadaptor), 
@@ -34,7 +41,7 @@ can be used to calculate crosstabs from labelled survey data (or any data.frame)
 
 
 ::: {.callout-note}
-Running the last code cell will recalculate the crosstabs & update the table_charter app in the bottom of this webpage.
+Running the code cell in @sec-calc-ct will recalculate the crosstabs & update the table_charter app in @sec-tab-ch.
 :::
 
 ## Survey data
@@ -82,7 +89,7 @@ To define the columns along the x-axis of the crosstabs, you just need to define
 ColVar <- "age"
 ```
 
-## Calculate crosstabs
+## Calculate crosstabs {#sec-calc-ct}
 
 If you have modified the input data above, running this cell will reprint the calculated crosstabs (running the crosstabser R package in RStudio will give you a color-formatted print output),
 and recalculate the according data input for the table_charter app at the bottom of this website:
@@ -110,7 +117,7 @@ data_string <- list(type = "table-object", data = l) |>
   ) |> as.character()
 ```
 
-## table_charter
+## table_charter {#sec-tab-ch}
 
 ```{ojs}
 html`<table-charter data='${data_string}'></table-charter>`

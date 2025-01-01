@@ -107,16 +107,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </head>
 
-<body>
+<body class="floating">
 
 <div id="quarto-search-results"></div>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
 <!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1</span> Introduction</a></li>
+  <li><a href="#survey-data" id="toc-survey-data" class="nav-link" data-scroll-target="#survey-data"><span class="header-section-number">2</span> Survey data</a></li>
+  <li><a href="#syntax-to-generate-crosstabs" id="toc-syntax-to-generate-crosstabs" class="nav-link" data-scroll-target="#syntax-to-generate-crosstabs"><span class="header-section-number">3</span> Syntax to generate crosstabs</a></li>
+  <li><a href="#sec-calc-ct" id="toc-sec-calc-ct" class="nav-link" data-scroll-target="#sec-calc-ct"><span class="header-section-number">4</span> Calculate crosstabs</a></li>
+  <li><a href="#sec-tab-ch" id="toc-sec-tab-ch" class="nav-link" data-scroll-target="#sec-tab-ch"><span class="header-section-number">5</span> table_charter</a></li>
+  </ul>
+<div class="quarto-code-links"><h2>Code Links</h2><ul><li><a href="https://github.com/urswilke/datadaptor-crosstabser-table_charter-demo/" target="_blank"><i class="bi bi-github"></i>GitHub Repo</a></li></ul></div></nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
 <!-- main -->
-<main class="content column-page" id="quarto-document-content">
+<main class="content column-page-right" id="quarto-document-content">
 <script type="module">
   import { TableCharter } from "https://unpkg.com/table_charter/dist/main.es.js"
 </script>
@@ -128,7 +143,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<div class="quarto-title-meta column-page">
+<div class="quarto-title-meta column-page-right">
 
     
   
@@ -140,6 +155,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
+<section id="introduction" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">1</span> Introduction</h2>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -153,8 +170,6 @@ Note
 <p>Please be patient! It will take a little while until everything is set up and you can run the code in the interactive cells.</p>
 </div>
 </div>
-<section id="introduction" class="level2">
-<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
 <p>This is the interactive demo-repo to show how the combination of the packages <a href="https://gitlab.com/urswilke/datadaptor">datadaptor</a>, <a href="https://gitlab.com/urswilke/crosstabser">crosstabser</a> &amp; <a href="https://gitlab.com/urswilke/table_charter">table_charter</a> can be used to calculate crosstabs from labelled survey data (or any data.frame).</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -166,12 +181,12 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Running the last code cell will recalculate the crosstabs &amp; update the table_charter app in the bottom of this webpage.</p>
+<p>Running the code cell in <a href="#sec-calc-ct" class="quarto-xref">Section&nbsp;4</a> will recalculate the crosstabs &amp; update the table_charter app in <a href="#sec-tab-ch" class="quarto-xref">Section&nbsp;5</a>.</p>
 </div>
 </div>
 </section>
-<section id="survey-data" class="level2">
-<h2 class="anchored" data-anchor-id="survey-data">Survey data</h2>
+<section id="survey-data" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="survey-data"><span class="header-section-number">2</span> Survey data</h2>
 <p>This is a toy example for survey data <code>df</code>. Typically, you would receive this data is an SPSS .sav file:</p>
 <div class="cell" data-autorun="true">
 <div>
@@ -184,8 +199,8 @@ eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiZGYg
 </div>
 </div>
 </section>
-<section id="syntax-to-generate-crosstabs" class="level2">
-<h2 class="anchored" data-anchor-id="syntax-to-generate-crosstabs">Syntax to generate crosstabs</h2>
+<section id="syntax-to-generate-crosstabs" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="syntax-to-generate-crosstabs"><span class="header-section-number">3</span> Syntax to generate crosstabs</h2>
 <p>This is an example how you can generate tables along the y axis of the crosstabs:</p>
 <div class="cell" data-autorun="true">
 <div>
@@ -209,8 +224,8 @@ eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiQ29s
 </div>
 </div>
 </section>
-<section id="calculate-crosstabs" class="level2">
-<h2 class="anchored" data-anchor-id="calculate-crosstabs">Calculate crosstabs</h2>
+<section id="sec-calc-ct" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="sec-calc-ct"><span class="header-section-number">4</span> Calculate crosstabs</h2>
 <p>If you have modified the input data above, running this cell will reprint the calculated crosstabs (running the crosstabser R package in RStudio will give you a color-formatted print output), and recalculate the according data input for the table_charter app at the bottom of this website:</p>
 <div class="cell" data-autorun="true" data-define="data_string">
 <div>
@@ -223,10 +238,10 @@ eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImRlZmluZSI6WyJkYXRhX3N0cmluZyJdLCJlZGl0Ijp0cnVl
 </div>
 </div>
 </section>
-<section id="table_charter" class="level2">
-<h2 class="anchored" data-anchor-id="table_charter">table_charter</h2>
+<section id="sec-tab-ch" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="sec-tab-ch"><span class="header-section-number">5</span> table_charter</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1" data-startfrom="115" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 114;"><span id="cb1-115"><a href="#cb1-115" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;table-charter data='</span><span class="sc">${</span>data_string<span class="sc">}</span><span class="vs">'&gt;&lt;/table-charter&gt;`</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1" data-startfrom="122" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 121;"><span id="cb1-122"><a href="#cb1-122" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;table-charter data='</span><span class="sc">${</span>data_string<span class="sc">}</span><span class="vs">'&gt;&lt;/table-charter&gt;`</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-1" data-nodetype="expression">
 
