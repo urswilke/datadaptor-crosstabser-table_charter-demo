@@ -1,6 +1,8 @@
 ---
-title: "quarto-webr-datadaptor-test"
-format: live-html
+title: "datadaptor-crosstabser-table_charter-demo"
+format: 
+  live-html:
+    page-layout: full
 engine: knitr
 webr:
   repos:
@@ -17,9 +19,28 @@ include-before-body:
 
 {{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
 
+::: {.callout-note}
 Please be patient! It will take a little while until everything is set up 
-and you can run the code in the interactive cells
-and the table_charter app in the bottom updates accordingly.
+and you can run the code in the interactive cells.
+:::
+
+## Introduction
+
+This is the interactive demo-repo to show how the combination of the packages
+[datadaptor](https://gitlab.com/urswilke/datadaptor), 
+[crosstabser](https://gitlab.com/urswilke/crosstabser) & 
+[table_charter](https://gitlab.com/urswilke/table_charter)
+can be used to calculate crosstabs from labelled survey data (or any data.frame).
+
+
+::: {.callout-note}
+Running the last code cell will recalculate the crosstabs & update the table_charter app in the bottom of this webpage.
+:::
+
+## Survey data
+
+This is a toy example for survey data `df`. 
+Typically, you would receive this data is an SPSS .sav file:
 
 ```{webr}
 #| autorun: true
@@ -40,6 +61,9 @@ df <- tibble::tibble(
 df
 ```
 
+## Syntax to generate crosstabs
+
+This is an example how you can generate tables along the y axis of the crosstabs:
 
 ```{webr}
 #| autorun: true
@@ -52,17 +76,27 @@ dfq <- tibble::tribble(
 dfq
 ```
 
+To define the columns along the x-axis of the crosstabs, you just need to define a character vector of variable names (cf. `df`):
 
+```{webr}
+ColVar <- "age"
+```
+
+## Calculate crosstabs
+
+If you have modified the input data above, running this cell will reprint the calculated crosstabs (running the crosstabser R package in RStudio will give you a color-formatted print output),
+and recalculate the according data input for the table_charter app at the bottom of this website:
 ```{webr}
 #| autorun: true
 #| define:
 #|   - data_string
-mapping_file = list(Questions = dfq, Macro = list(ColVar = "age"))
+mapping_file = list(Questions = dfq, Macro = list(ColVar = ColVar))
 
 m_selvar <- Tabula$new(
   df,
   mapping_file,
 )
+print(m_selvar)
 m_selvar$prepare_5_tables()
 l <- m_selvar$crosstabs$data |> purrr::set_names(c("Tab", "Val", "Row", "Head", "Col"))
 l$Val <- l$Val |> tidyr::drop_na(Value)
@@ -76,10 +110,10 @@ data_string <- list(type = "table-object", data = l) |>
   ) |> as.character()
 ```
 
+## table_charter
+
 ```{ojs}
-html`
-  <table-charter data='${data_string}'></table-charter>
-`
+html`<table-charter data='${data_string}'></table-charter>`
 ```
 
 

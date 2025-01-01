@@ -2,8 +2,43 @@
   {
     "objectID": "datadaptor-crosstabser-table_charter-demo.html",
     "href": "datadaptor-crosstabser-table_charter-demo.html",
-    "title": "quarto-webr-datadaptor-test",
+    "title": "datadaptor-crosstabser-table_charter-demo",
     "section": "",
-    "text": "Please be patient! It will take a little while until everything is set up and you can run the code in the interactive cells and the table_charter app in the bottom updates accordingly.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nhtml`\n  &lt;table-charter data='${data_string}'&gt;&lt;/table-charter&gt;\n`"
+    "text": "Note\n\n\n\nPlease be patient! It will take a little while until everything is set up and you can run the code in the interactive cells."
+  },
+  {
+    "objectID": "datadaptor-crosstabser-table_charter-demo.html#introduction",
+    "href": "datadaptor-crosstabser-table_charter-demo.html#introduction",
+    "title": "datadaptor-crosstabser-table_charter-demo",
+    "section": "Introduction",
+    "text": "Introduction\nThis is the interactive demo-repo to show how the combination of the packages datadaptor, crosstabser & table_charter can be used to calculate crosstabs from labelled survey data (or any data.frame).\n\n\n\n\n\n\nNote\n\n\n\nRunning the last code cell will recalculate the crosstabs & update the table_charter app in the bottom of this webpage."
+  },
+  {
+    "objectID": "datadaptor-crosstabser-table_charter-demo.html#survey-data",
+    "href": "datadaptor-crosstabser-table_charter-demo.html#survey-data",
+    "title": "datadaptor-crosstabser-table_charter-demo",
+    "section": "Survey data",
+    "text": "Survey data\nThis is a toy example for survey data df. Typically, you would receive this data is an SPSS .sav file:"
+  },
+  {
+    "objectID": "datadaptor-crosstabser-table_charter-demo.html#syntax-to-generate-crosstabs",
+    "href": "datadaptor-crosstabser-table_charter-demo.html#syntax-to-generate-crosstabs",
+    "title": "datadaptor-crosstabser-table_charter-demo",
+    "section": "Syntax to generate crosstabs",
+    "text": "Syntax to generate crosstabs\nThis is an example how you can generate tables along the y axis of the crosstabs:\n\n\n\n\n\n\n\n\nTo define the columns along the x-axis of the crosstabs, you just need to define a character vector of variable names (cf. df):"
+  },
+  {
+    "objectID": "datadaptor-crosstabser-table_charter-demo.html#calculate-crosstabs",
+    "href": "datadaptor-crosstabser-table_charter-demo.html#calculate-crosstabs",
+    "title": "datadaptor-crosstabser-table_charter-demo",
+    "section": "Calculate crosstabs",
+    "text": "Calculate crosstabs\nIf you have modified the input data above, running this cell will reprint the calculated crosstabs (running the crosstabser R package in RStudio will give you a color-formatted print output), and recalculate the according data input for the table_charter app at the bottom of this website:"
+  },
+  {
+    "objectID": "datadaptor-crosstabser-table_charter-demo.html#table_charter",
+    "href": "datadaptor-crosstabser-table_charter-demo.html#table_charter",
+    "title": "datadaptor-crosstabser-table_charter-demo",
+    "section": "table_charter",
+    "text": "table_charter\n\nhtml`&lt;table-charter data='${data_string}'&gt;&lt;/table-charter&gt;`"
   }
 ]
