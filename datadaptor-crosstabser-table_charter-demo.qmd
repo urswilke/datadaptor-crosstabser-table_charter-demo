@@ -25,31 +25,18 @@ include-before-body:
 
 {{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
 
-
 ## Introduction
 
 ::: callout-note
-Please be patient! It will take a little while until everything is set
-up and you can run the code in the interactive cells.[^1]
+Please be patient! It will take a little while until everything is set up and you can run the code in the interactive cells.[^1]
 :::
 
-[^1]: This website is built with the
-    [quarto-live](https://r-wasm.github.io/quarto-live/) extension and
-    the [webr](https://github.com/r-wasm/webr/) wasm versions of the R
-    packages from [R-universe](https://urswilke.r-universe.dev/builds).
-    If you install the R packages on your PC, the code runs much faster.
+[^1]: This website is built with the [quarto-live](https://r-wasm.github.io/quarto-live/) extension and the [webr](https://github.com/r-wasm/webr/) wasm versions of the R packages from [R-universe](https://urswilke.r-universe.dev/builds). If you install the R packages on your PC, the code runs much faster.
 
-This interactive demo shows how the combination of the R packages
-[datadaptor](https://gitlab.com/urswilke/datadaptor) &
-[crosstabser](https://gitlab.com/urswilke/crosstabser) can be used to
-calculate crosstabs from labelled survey data (or any data.frame). In
-the javascript
-[table_charter](https://gitlab.com/urswilke/table_charter) app you can
-then interactively create plots of the crosstabs.
+This interactive demo shows how the combination of the R packages [datadaptor](https://gitlab.com/urswilke/datadaptor) & [crosstabser](https://gitlab.com/urswilke/crosstabser) can be used to calculate crosstabs from labelled survey data (or any data.frame). In the javascript [table_charter](https://gitlab.com/urswilke/table_charter) app you can then interactively create plots of the crosstabs.
 
 ::: callout-note
-Running the code cell in @sec-calc-ct will recalculate the crosstabs &
-update the table_charter app in @sec-tab-ch.
+Running the code cell in @sec-calc-ct will recalculate the crosstabs & update the table_charter app in @sec-tab-ch.
 :::
 
 We'll load some R packages:
@@ -61,49 +48,57 @@ library(crosstabser)
 library(haven)
 ```
 
-
 ## Survey data
 
-This is a toy example for survey data `df`. Typically, you would receive
-this data in an SPSS .sav file:
+This is a toy example for survey data `df`. Typically, you would receive this data in an SPSS .sav file:
 
 ```{webr}
-#| autorun: true
+set.seed(123)
+n <- 10
 df <- tibble::tibble(
-    q1_1 = c(1, 0, 0, 0, 1) |> labelled(c(Selected = 1, Unselected = 0), label = "Choice 1 & 2"),
-    q1_2 = c(1, 1, 0, 1, 0) |> labelled(c(Selected = 1, Unselected = 0), label = "Choice 1 & 2"),
-    q1_3 = c(0, 1, 0, 0, 0) |> labelled(c(Selected = 1, Unselected = 0), label = "Choice 3 & 4"),
-    q1_4 = c(1, 1, 1, 1, 1) |> labelled(c(Selected = 1, Unselected = 0), label = "Choice 3 & 4"),
-    q1n1 = c(1, 2, 3, 2, 3) |> labelled(c(ch1=1, ch2=2, ch3 = 3, ch4=4), label = "Choice 1 & 2"),
-    q1n2 = c(2,-2, 4,-2, 4) |> labelled(c(ch1=1, ch2=2, ch3 = 3, ch4=4), label = "Choice 1 & 2"),
-    q1n3 = c(3,NA,-2, 1,-2) |> labelled(c(ch1=1, ch2=2, ch3 = 3, ch4=4), label = "Choice 3 & 4"),
-    q1n4 = c(4,-2,-2, 3,-2) |> labelled(c(ch1=1, ch2=2, ch3 = 3, ch4=4), label = "Choice 3 & 4"),
-    age  = c(2, 1, 3, 3, 2) |> labelled(c("18-39" = 1, "40-59" = 2, "60+" = 3), label = "age"),
-    sel1 = c(1, 2, 3, 2, 3) |> labelled(c("sel1" = 1, "sel2" = 2, sel3 = 3)),
-    sel2 = c(1, 3, 2, 1, 2) |> labelled(c("sel1" = 1, "sel2" = 2, sel3 = 3)),
-    gew = c(0.5, 1.2, 0.4, 0.9, 1.3)
+    q1_1 = sample(c(0, 1), n, TRUE) |> labelled(c(Selected = 1, Unselected = 0), label = "Pizza"),
+    q1_2 = sample(c(0, 1), n, TRUE) |> labelled(c(Selected = 1, Unselected = 0), label = "Lasagne"),
+    q1_3 = sample(c(0, 1), n, TRUE) |> labelled(c(Selected = 1, Unselected = 0), label = "Bruschetta"),
+    q2n1 = sample(c(1, 2, 3, 4), n, TRUE) |> labelled(c(Beer=1, Sauerkraut=2, Brezel = 3, Sauerkraut=4), label = "1st choice"),
+    q2n2 = sample(c(1, 2, 3, 4, rep(NA_real_, 1)), n, TRUE) |> labelled(c(Beer=1, Sauerkraut=2, Brezel = 3, Sauerkraut=4), label = "2nd choice"),
+    q2n3 = sample(c(1, 2, 3, 4, rep(NA_real_, 4)), n, TRUE) |> labelled(c(Beer=1, Sauerkraut=2, Brezel = 3, Sauerkraut=4), label = "3rd choice"),
+    q2n4 = sample(c(1, 2, 3, 4, rep(NA_real_, 8)), n, TRUE) |> labelled(c(Beer=1, Sauerkraut=2, Brezel = 3, Sauerkraut=4), label = "4th choice"),
+    q3_1 = sample(c(1, 2, 3, 4, 5), n, TRUE) |> labelled(c("Not at all" = 1, "2" = 2, "3" = 3, "4" = 4, "Very much" = 5), label = "Dogs are cool"),
+    q3_2 = sample(c(1, 2, 3, 4, 5), n, TRUE) |> labelled(c("Not at all" = 1, "2" = 2, "3" = 3, "4" = 4, "Very much" = 5), label = "Cats are beautiful"),
+    age  = sample(c(1, 2, 3), n, TRUE) |> labelled(c("18-39" = 1, "40-59" = 2, "60+" = 3), label = "age"),
+    gew = runif(n, 0.5, 3)
 )
 df
 ```
 
 ## Syntax to generate crosstabs
 
-This is an example how you can generate tables along the y axis of the
-crosstabs:
+Here we'll show some examples how you can generate tables along the y-axis of the crosstabs. Normally we do this in an Excel file on a sheet named "Questions". In order to allow you to play around we use the following editable table[^2]. If you edit the cells, this will trigger a reactive update of the code cell in @sec-calc-ct.
 
-```{webr}
-#| autorun: true
-dfq <- tibble::tribble(
-    ~Abbreviation, ~Title,             ~Type, ~RowVar,               ~SelVar,     ~SelVal,
-    "mdg",         "mdg without Mult", "mdg", "q1_1 q1_2 q1_3 q1_4", "sel1 sel2", "2-3:sel2_&_3",
-    "mcg",         "mcg without Mult", "mcg", "q1n1 q1n2 q1n3 q1n4", "sel1 sel2", "2-3:sel2_&_3",
-    "mw",          "mw without Mult",  "mw",  "q1n1 q1n2 q1n3 q1n4", "sel1 sel2", "1-2:sel1_&_2",
-)
-dfq
+[^2]: This table is automatically translated into the R data.frame `dfq.`
+
+```{ojs}
+//| echo: false
+import {createTable, observeTable} from '@parlant/editable-table'
 ```
 
-To define the columns along the x-axis of the crosstabs, you just need
-to define a character vector of variable names (cf. `df`):
+```{ojs}
+//| echo: false
+inputData = [
+  { Abbreviation: "age", Title: "Age", Type: "cat", RowVar: "age" },
+  { Abbreviation: "fav_it", Title: "What`s your favorite Italian food?", Type: "mdg", RowVar: "q1_1 q1_2 q1_3", MdgMissLab: "No answer" },
+  { Abbreviation: "fav_de", Title: "What`s your favorite German food?", Type: "mcg", RowVar: "q2n1 q2n2 q2n3 q2n4" },
+  { Abbreviation: "item_bat", Title: "How much do you agree?", Type: "mw", RowVar: "q3_1 q3_2", "Freq": "0" },
+]
+```
+
+```{ojs}
+//| echo: false
+table = createTable(inputData, {headerEditable: true, appendRows: true})
+dfq = observeTable(table)
+```
+
+To define the columns along the x-axis of the crosstabs, you just need to define a character vector of variable names in `df`:
 
 ```{webr}
 ColVar <- "age"
@@ -111,26 +106,24 @@ ColVar <- "age"
 
 ## Calculate crosstabs {#sec-calc-ct}
 
-If you have modified the input data above, running this cell will
-reprint[^2] the calculated crosstabs, and recalculate the according data
-input for the table_charter app at the bottom of this website:
+If you have modified the input data above, running this cell will reprint[^3] the calculated crosstabs, and recalculate the according data input for the table_charter app at the bottom of this website:
 
-[^2]: Unlike this wasm version in your browser, running the crosstabser
-    R package in RStudio will give you a color-formatted print output.
+[^3]: Unlike this wasm version in your browser, running the crosstabser R package in RStudio will give you a color-formatted print output.
 
 ```{webr}
-#| autorun: true
+#| input:
+#|   - dfq
 #| define:
 #|   - data_string
-mapping_file = list(Questions = dfq, Macro = list(ColVar = ColVar))
+mapping_file <- list(Questions = dfq, Macro = list(ColVar = ColVar)) 
 
-m_selvar <- Tabula$new(
+m <- Tabula$new(
   df,
   mapping_file,
 )
-print(m_selvar)
-m_selvar$prepare_5_tables()
-l <- m_selvar$crosstabs$data |> purrr::set_names(c("Tab", "Val", "Row", "Head", "Col"))
+print(m)
+m$prepare_5_tables()
+l <- m$crosstabs$data |> purrr::set_names(c("Tab", "Val", "Row", "Head", "Col"))
 l$Val <- l$Val |> tidyr::drop_na(Value)
 
 data_string <- list(type = "table-object", data = l) |>
@@ -144,8 +137,7 @@ data_string <- list(type = "table-object", data = l) |>
 
 ## table_charter {#sec-tab-ch}
 
-The table_charter app can be included in an html file by loading the
-package's source code with for instance:
+The table_charter app can be included in an html file by loading the package's source code with for instance:
 
 ```{html}
 #| eval: false
@@ -154,12 +146,9 @@ package's source code with for instance:
 </script>
 ```
 
-and then adding a `<table-charter>` html tag with the crosstab data from
-R as its data attribute[^3]:
+and then adding a `<table-charter>` html tag with the crosstab data from R as its data attribute[^4]:
 
-[^3]: Here we use [observable's hypertext
-    literal](https://observablehq.com/@observablehq/htl) to generate the
-    html in a quarto ojs cell. 
+[^4]: Here we use [observable's hypertext literal](https://observablehq.com/@observablehq/htl) to generate the html in a quarto ojs cell.
 
 ```{ojs}
 //| echo: fenced

@@ -25,27 +25,27 @@
     "href": "datadaptor-crosstabser-table_charter-demo.html#syntax-to-generate-crosstabs",
     "title": "datadaptor-crosstabser-table_charter-demo",
     "section": "3 Syntax to generate crosstabs",
-    "text": "3 Syntax to generate crosstabs\nThis is an example how you can generate tables along the y axis of the crosstabs:\n\n\n\n\n\n\n\n\nTo define the columns along the x-axis of the crosstabs, you just need to define a character vector of variable names (cf. df):"
+    "text": "3 Syntax to generate crosstabs\nHere we’ll show some examples how you can generate tables along the y-axis of the crosstabs. Normally we do this in an Excel file on a sheet named “Questions”. In order to allow you to play around we use the following editable table2. If you edit the cells, this will trigger a reactive update of the code cell in Section 4.\n\nimport {createTable, observeTable} from '@parlant/editable-table'\n\n\n\n\n\n\n\ninputData = [\n  { Abbreviation: \"age\", Title: \"Age\", Type: \"cat\", RowVar: \"age\" },\n  { Abbreviation: \"fav_it\", Title: \"What`s your favorite Italian food?\", Type: \"mdg\", RowVar: \"q1_1 q1_2 q1_3\", MdgMissLab: \"No answer\" },\n  { Abbreviation: \"fav_de\", Title: \"What`s your favorite German food?\", Type: \"mcg\", RowVar: \"q2n1 q2n2 q2n3 q2n4\" },\n  { Abbreviation: \"item_bat\", Title: \"How much do you agree?\", Type: \"mw\", RowVar: \"q3_1 q3_2\", \"Freq\": \"0\" },\n]\n\n\n\n\n\n\n\ntable = createTable(inputData, {headerEditable: true, appendRows: true})\ndfq = observeTable(table)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nTo define the columns along the x-axis of the crosstabs, you just need to define a character vector of variable names in df:"
   },
   {
     "objectID": "datadaptor-crosstabser-table_charter-demo.html#sec-calc-ct",
     "href": "datadaptor-crosstabser-table_charter-demo.html#sec-calc-ct",
     "title": "datadaptor-crosstabser-table_charter-demo",
     "section": "4 Calculate crosstabs",
-    "text": "4 Calculate crosstabs\nIf you have modified the input data above, running this cell will reprint2 the calculated crosstabs, and recalculate the according data input for the table_charter app at the bottom of this website:"
+    "text": "4 Calculate crosstabs\nIf you have modified the input data above, running this cell will reprint3 the calculated crosstabs, and recalculate the according data input for the table_charter app at the bottom of this website:"
   },
   {
     "objectID": "datadaptor-crosstabser-table_charter-demo.html#sec-tab-ch",
     "href": "datadaptor-crosstabser-table_charter-demo.html#sec-tab-ch",
     "title": "datadaptor-crosstabser-table_charter-demo",
     "section": "5 table_charter",
-    "text": "5 table_charter\nThe table_charter app can be included in an html file by loading the package’s source code with for instance:\n\n&lt;script type=\"module\"&gt; \n  import { TableCharter } from \"https://unpkg.com/table_charter/dist/main.es.js\"\n&lt;/script&gt;\n\nand then adding a &lt;table-charter&gt; html tag with the crosstab data from R as its data attribute3:\n\n```{ojs}\n//| echo: fenced\nhtml`&lt;table-charter data='${data_string}'&gt;&lt;/table-charter&gt;`\n```"
+    "text": "5 table_charter\nThe table_charter app can be included in an html file by loading the package’s source code with for instance:\n\n&lt;script type=\"module\"&gt; \n  import { TableCharter } from \"https://unpkg.com/table_charter/dist/main.es.js\"\n&lt;/script&gt;\n\nand then adding a &lt;table-charter&gt; html tag with the crosstab data from R as its data attribute4:\n\n```{ojs}\n//| echo: fenced\nhtml`&lt;table-charter data='${data_string}'&gt;&lt;/table-charter&gt;`\n```"
   },
   {
     "objectID": "datadaptor-crosstabser-table_charter-demo.html#footnotes",
     "href": "datadaptor-crosstabser-table_charter-demo.html#footnotes",
     "title": "datadaptor-crosstabser-table_charter-demo",
     "section": "Footnotes",
-    "text": "Footnotes\n\n\nThis website is built with the quarto-live extension and the webr wasm versions of the R packages from R-universe. If you install the R packages on your PC, the code runs much faster.↩︎\nUnlike this wasm version in your browser, running the crosstabser R package in RStudio will give you a color-formatted print output.↩︎\nHere we use observable’s hypertext literal to generate the html in a quarto ojs cell.↩︎"
+    "text": "Footnotes\n\n\nThis website is built with the quarto-live extension and the webr wasm versions of the R packages from R-universe. If you install the R packages on your PC, the code runs much faster.↩︎\nThis table is automatically translated into the R data.frame dfq.↩︎\nUnlike this wasm version in your browser, running the crosstabser R package in RStudio will give you a color-formatted print output.↩︎\nHere we use observable’s hypertext literal to generate the html in a quarto ojs cell.↩︎"
   }
 ]
