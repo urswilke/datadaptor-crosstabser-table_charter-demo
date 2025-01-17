@@ -122,9 +122,7 @@ m <- Tabula$new(
   mapping_file,
 )
 print(m)
-m$prepare_5_tables()
-l <- m$crosstabs$data |> purrr::set_names(c("Tab", "Val", "Row", "Head", "Col"))
-l$Val <- l$Val |> tidyr::drop_na(Value)
+l <- m$get_crosstabs_data() |> purrr::set_names(c("Tab", "Val", "Row", "Head", "Col"))
 
 data_string <- list(type = "table-object", data = l) |>
   jsonlite::toJSON(
