@@ -15,7 +15,7 @@ webr:
     - https://urswilke.r-universe.dev
   cell-options:
     autorun: true
-  packages: ['datadaptor', 'crosstabser', 'haven', 'jsonlite']
+  packages: ['datadaptor', 'crosstabser', 'haven']
 include-before-body:
   text: |
     <script type="module"> 
@@ -108,7 +108,8 @@ ColVar <- "age"
 
 If you have modified the input data above, running this cell will reprint[^3] the calculated crosstabs, and recalculate the according data input for the table_charter app at the bottom of this website:
 
-[^3]: Unlike this wasm version in your browser, running the crosstabser R package in RStudio will give you a color-formatted print output.
+[^3]: Unlike this wasm version in your browser, running the crosstabser R package in RStudio will give you a color-formatted print output. 
+The formatting also works in the R console on Linux, but not on Windows.
 
 ```{webr}
 #| input:
@@ -122,15 +123,7 @@ m <- Tabula$new(
   mapping_file,
 )
 print(m)
-l <- m$get_crosstabs_data() |> purrr::set_names(c("Tab", "Val", "Row", "Head", "Col"))
-
-data_string <- list(type = "table-object", data = l) |>
-  jsonlite::toJSON(
-    dataframe = "columns",
-    na = "null",
-    null = "null",
-    auto_unbox = TRUE
-  ) |> as.character()
+data_string <- m$get_crosstabs_data() |> gen_data_json()
 ```
 
 ## table_charter {#sec-tab-ch}

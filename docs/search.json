@@ -46,6 +46,6 @@
     "href": "datadaptor-crosstabser-table_charter-demo.html#footnotes",
     "title": "datadaptor-crosstabser-table_charter-demo",
     "section": "Footnotes",
-    "text": "Footnotes\n\n\nThis website is built with the quarto-live extension and the webr wasm versions of the R packages from R-universe. If you install the R packages on your PC, the code runs much faster.↩︎\nThis table is automatically translated into the R data.frame dfq.↩︎\nUnlike this wasm version in your browser, running the crosstabser R package in RStudio will give you a color-formatted print output.↩︎\nHere we use observable’s hypertext literal to generate the html in a quarto ojs cell.↩︎"
+    "text": "Footnotes\n\n\nThis website is built with the quarto-live extension and the webr wasm versions of the R packages from R-universe. If you install the R packages on your PC, the code runs much faster.↩︎\nThis table is automatically translated into the R data.frame dfq.↩︎\nUnlike this wasm version in your browser, running the crosstabser R package in RStudio will give you a color-formatted print output. The formatting also works in the R console on Linux, but not on Windows.↩︎\nHere we use observable’s hypertext literal to generate the html in a quarto ojs cell.↩︎"
   }
 ]
