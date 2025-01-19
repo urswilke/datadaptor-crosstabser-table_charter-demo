@@ -1,0 +1,15 @@
+td {
+  border: 1px solid;
+  border-collapse: collapse;
+  padding: 5px;
+}
+table-charter {
+  display: inline-block;
+  height: 80vh;
+  width: 100%;
+  /* in order to prevent having e.g. white font on white background
+  we set the text color to grey.
+  Otherwise the table-charter color setting according to
+  prefered dark/light mode of the user can clash with table-charter settings*/
+  color: #888;
+}

@@ -9,6 +9,8 @@ format:
     toc: true
     toc-location: left
     number-sections: true
+    css: styles.css
+    code-link: true
 engine: knitr
 webr:
   repos:
@@ -50,11 +52,11 @@ library(haven)
 
 ## Survey data
 
-This is a toy example for survey data `df`. Typically, you would receive this data in an SPSS .sav file:
+This is a toy example for survey data `df`. Typically, you would receive such data in an SPSS .sav file:
 
 ```{webr}
 set.seed(123)
-n <- 10
+n <- 20
 df <- tibble::tibble(
     q1_1 = sample(c(0, 1), n, TRUE) |> labelled(c(Selected = 1, Unselected = 0), label = "Pizza"),
     q1_2 = sample(c(0, 1), n, TRUE) |> labelled(c(Selected = 1, Unselected = 0), label = "Lasagne"),
@@ -62,67 +64,139 @@ df <- tibble::tibble(
     q2n1 = sample(c(1, 2, 3), n, TRUE) |> labelled(c(Beer=1, Sauerkraut=2, Brezel = 3), label = "1st choice"),
     q2n2 = sample(c(1, 2, 3, rep(NA_real_, 1)), n, TRUE) |> labelled(c(Beer=1, Sauerkraut=2, Brezel = 3), label = "2nd choice"),
     q2n3 = sample(c(1, 2, 3, rep(NA_real_, 4)), n, TRUE) |> labelled(c(Beer=1, Sauerkraut=2, Brezel = 3), label = "3rd choice"),
-    q2n4 = sample(c(1, 2, 3, rep(NA_real_, 8)), n, TRUE) |> labelled(c(Beer=1, Sauerkraut=2, Brezel = 3), label = "4th choice"),
     q3_1 = sample(c(1, 2, 3, 4, 5), n, TRUE) |> labelled(c("Not at all" = 1, "2" = 2, "3" = 3, "4" = 4, "Very much" = 5), label = "Dogs are cool"),
     q3_2 = sample(c(1, 2, 3, 4, 5), n, TRUE) |> labelled(c("Not at all" = 1, "2" = 2, "3" = 3, "4" = 4, "Very much" = 5), label = "Cats are beautiful"),
-    age  = sample(c(1, 2, 3), n, TRUE) |> labelled(c("18-39" = 1, "40-59" = 2, "60+" = 3), label = "age"),
+    age  = sample(18:65, n, TRUE) |> labelled(label = "What's your age?"),
     gew = runif(n, 0.5, 3)
 )
 df
 ```
-
-## Syntax to generate crosstabs
-
-Here we'll show some examples how you can generate tables along the y-axis of the crosstabs. Normally we do this in an Excel file on a sheet named "Questions". In order to allow you to play around we use the following editable table[^2]. If you edit the cells, this will trigger a reactive update of the code cell in @sec-calc-ct.
-
-[^2]: This table is automatically translated into the R data.frame `dfq.`
 
 ```{ojs}
 //| echo: false
 import {createTable, observeTable} from '@parlant/editable-table'
 ```
 
+## Using datadaptor & crosstabser
+
+The standard usage of datadaptor & crosstabser is with Excel files that can be created with `create_mapping()` & `create_tabula()`, respectively. In order to allow you to play around we use the following editable tables, instead of an Excel file. If you edit these tables, this will trigger a reactive update of the code cell in @sec-calc-ct.
+
+### Modify the data {#sec-data-adapt}
+
+The data `df` contains the numeric variable `df$age` with the age of the respondent. For crosstabs it makes more sense to work with categorical variables of age intervals. This can be done with datadaptor with the [`#REC`](https://urswilke.gitlab.io/datadaptor/articles/command_blocks.html#rec) command in a sheet with the prefix `"Free"`[^2].
+
+[^2]: This table is automatically translated into the R data.frame `Free1` in @sec-calc-ct.
+
 ```{ojs}
 //| echo: false
+freeData = [
+  { A: "#REC", B: "age", C: "age_cat", D: "Age", E: "" },
+  { A: "", B: "18", C: "39", D: "1", E: "18-39" },
+  { A: "", B: "40", C: "49", D: "2", E: "40-49" },
+  { A: "", B: "50", C: "Inf", D: "3", E: "50+" },
+]
+```
+
+```{ojs}
+//| echo: false
+free_table = createTable(freeData, {headerEditable: false, appendRows: true})
+res = observeTable(free_table)
+Free1 = res.map(
+  ({
+    A: X1,
+    B: X2,
+    C: X3,
+    D: X4,
+    E: X5,
+  }) =>({
+    X1, 
+    X2, 
+    X3, 
+    X4, 
+    X5
+  })
+)
+```
+
+*Example code in the* `Free1` *sheet in the Excel mapping file. You can edit this table.*
+
+```{webr}
+#| edit: false
+#| echo: false
+#| input:
+#|   - Free1
+Free1 <- Free1 |> dplyr::mutate(across(
+  everything(), 
+  \(x) {x[x == ""] <- NA_character_; x}
+))
+```
+
+### Generate crosstabs
+
+Here we'll show some examples how you can generate tables along the y-axis of the crosstabs[^3]:
+
+[^3]: This table is automatically translated into the R data.frame `Questions` in @sec-calc-ct.
+
+```{ojs}
+//| echo: false
+//| fig-cap: "Example of the `Free1` sheet in the Excel mapping file"
 inputData = [
-  { Abbreviation: "age", Title: "Age", Type: "cat", RowVar: "age" },
-  { Abbreviation: "fav_it", Title: "What`s your favorite Italian food?", Type: "mdg", RowVar: "q1_1 q1_2 q1_3", MdgMissLab: "No answer" },
-  { Abbreviation: "fav_de", Title: "What`s your favorite German food?", Type: "mcg", RowVar: "q2n1 q2n2 q2n3 q2n4" },
-  { Abbreviation: "item_bat", Title: "How much do you agree?", Type: "mw", RowVar: "q3_1 q3_2", "Freq": "0" },
+  { Abbreviation: "age", Title: "Age", Type: "cat", RowVar: "age", MetrMac: "S1M0" },
+  { Abbreviation: "fav_it", Title: "What`s your favorite Italian food?", Type: "mdg", RowVar: "q1_1 q1_2 q1_3", MdgMissLab: "No answer", MetrMac: "" },
+  { Abbreviation: "fav_de", Title: "What`s your favorite German food?", Type: "mcg", RowVar: "q2n1 q2n2 q2n3", MetrMac: "" },
+  { Abbreviation: "item_bat", Title: "How much do you agree?", Type: "mw", RowVar: "q3_1 q3_2", "Freq": "0", MetrMac: "" },
 ]
 ```
 
 ```{ojs}
 //| echo: false
 table = createTable(inputData, {headerEditable: true, appendRows: true})
-dfq = observeTable(table)
+Questions = observeTable(table)
 ```
 
-To define the columns along the x-axis of the crosstabs, you just need to define a character vector of variable names in `df`:
+*Example code in the* `Questions` *sheet in the Excel mapping file. You can edit this table.*
+
+To define the columns along the x-axis of the crosstabs, you just need to define a character vector of variable names in `df`. We will use the variable `age_cat` that we generated in @sec-data-adapt:
 
 ```{webr}
-ColVar <- "age"
+ColVar <- "age_cat"
 ```
 
 ## Calculate crosstabs {#sec-calc-ct}
 
-If you have modified the input data above, running this cell will reprint[^3] the calculated crosstabs, and recalculate the according data input for the table_charter app at the bottom of this website:
+If you have modified the input data above, running this cell will:
 
-[^3]: Unlike this wasm version in your browser, running the crosstabser R package in RStudio will give you a color-formatted print output. 
-The formatting also works in the R console on Linux, but not on Windows.
+* execute `Mapping$modify_data()` (as we pass `df` as the dat argument; see [here](https://urswilke.gitlab.io/crosstabser/reference/Tabula.html#method-new-)), and
+* call `Tabula$calc_qtabs()`.
+
+The `print()` call then reprints[^4] the calculated crosstabs, 
+and finally we recalculate the data input for the table_charter app in @sec-tab-ch:
+
+[^4]: Unlike this wasm version in your browser, running the crosstabser R package in RStudio will give you a color-formatted print output. The formatting also works in the R console on Linux, but not on Windows.
 
 ```{webr}
 #| input:
-#|   - dfq
+#|   - Questions
+#|   - Free1
 #| define:
 #|   - data_string
-mapping_file <- list(Questions = dfq, Macro = list(ColVar = ColVar)) 
+# This is the way we can define a "mapping file" as an R list() object:
+mapping_file <- list(
+  Free1 = Free1, 
+  Questions = Questions, 
+  Macro = list(ColVar = ColVar)
+) 
 
 m <- Tabula$new(
-  df,
-  mapping_file,
+  dat = df,
+  # With an Excel mapping file, we would instead pass the file path here:
+  mapping_file = mapping_file,
 )
+
 print(m)
+
+# Here we generate a json string of the data 
+# in the format needed by table-charter:
 data_string <- m$get_crosstabs_data() |> gen_data_json()
 ```
 
@@ -137,11 +211,13 @@ The table_charter app can be included in an html file by loading the package's s
 </script>
 ```
 
-and then adding a `<table-charter>` html tag with the crosstab data from R as its data attribute[^4]:
+and then adding a `<table-charter>` html tag with the crosstab data from R as its data attribute[^5]:
 
-[^4]: Here we use [observable's hypertext literal](https://observablehq.com/@observablehq/htl) to generate the html in a quarto ojs cell.
+[^5]: Here we use [observable's hypertext literal](https://observablehq.com/@observablehq/htl) to generate the html in a quarto ojs cell.
 
 ```{ojs}
 //| echo: fenced
-html`<table-charter data='${data_string}'></table-charter>`
+html`
+  <table-charter data='${data_string}'></table-charter>
+`
 ```

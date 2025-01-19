@@ -17,35 +17,35 @@
     "objectID": "datadaptor-crosstabser-table_charter-demo.html#survey-data",
     "href": "datadaptor-crosstabser-table_charter-demo.html#survey-data",
     "title": "datadaptor-crosstabser-table_charter-demo",
-    "section": "2 Survey data",
-    "text": "2 Survey data\nThis is a toy example for survey data df. Typically, you would receive this data in an SPSS .sav file:"
+    "section": "\n2 Survey data",
+    "text": "2 Survey data\nThis is a toy example for survey data df. Typically, you would receive such data in an SPSS .sav file:\n\n\n\n\n\n\n\n\n\nimport {createTable, observeTable} from '@parlant/editable-table'"
   },
   {
-    "objectID": "datadaptor-crosstabser-table_charter-demo.html#syntax-to-generate-crosstabs",
-    "href": "datadaptor-crosstabser-table_charter-demo.html#syntax-to-generate-crosstabs",
+    "objectID": "datadaptor-crosstabser-table_charter-demo.html#using-datadaptor-crosstabser",
+    "href": "datadaptor-crosstabser-table_charter-demo.html#using-datadaptor-crosstabser",
     "title": "datadaptor-crosstabser-table_charter-demo",
-    "section": "3 Syntax to generate crosstabs",
-    "text": "3 Syntax to generate crosstabs\nHere we’ll show some examples how you can generate tables along the y-axis of the crosstabs. Normally we do this in an Excel file on a sheet named “Questions”. In order to allow you to play around we use the following editable table2. If you edit the cells, this will trigger a reactive update of the code cell in Section 4.\n\nimport {createTable, observeTable} from '@parlant/editable-table'\n\n\n\n\n\n\n\ninputData = [\n  { Abbreviation: \"age\", Title: \"Age\", Type: \"cat\", RowVar: \"age\" },\n  { Abbreviation: \"fav_it\", Title: \"What`s your favorite Italian food?\", Type: \"mdg\", RowVar: \"q1_1 q1_2 q1_3\", MdgMissLab: \"No answer\" },\n  { Abbreviation: \"fav_de\", Title: \"What`s your favorite German food?\", Type: \"mcg\", RowVar: \"q2n1 q2n2 q2n3 q2n4\" },\n  { Abbreviation: \"item_bat\", Title: \"How much do you agree?\", Type: \"mw\", RowVar: \"q3_1 q3_2\", \"Freq\": \"0\" },\n]\n\n\n\n\n\n\n\ntable = createTable(inputData, {headerEditable: true, appendRows: true})\ndfq = observeTable(table)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nTo define the columns along the x-axis of the crosstabs, you just need to define a character vector of variable names in df:"
+    "section": "\n3 Using datadaptor & crosstabser",
+    "text": "3 Using datadaptor & crosstabser\nThe standard usage of datadaptor & crosstabser is with Excel files that can be created with create_mapping() & create_tabula(), respectively. In order to allow you to play around we use the following editable tables, instead of an Excel file. If you edit these tables, this will trigger a reactive update of the code cell in Section 4.\n\n3.1 Modify the data\nThe data df contains the numeric variable df$age with the age of the respondent. For crosstabs it makes more sense to work with categorical variables of age intervals. This can be done with datadaptor with the #REC command in a sheet with the prefix \"Free\"2.\n\nfreeData = [\n  { A: \"#REC\", B: \"age\", C: \"age_cat\", D: \"Age\", E: \"\" },\n  { A: \"\", B: \"18\", C: \"39\", D: \"1\", E: \"18-39\" },\n  { A: \"\", B: \"40\", C: \"49\", D: \"2\", E: \"40-49\" },\n  { A: \"\", B: \"50\", C: \"Inf\", D: \"3\", E: \"50+\" },\n]\n\n\n\n\n\n\n\nfree_table = createTable(freeData, {headerEditable: false, appendRows: true})\nres = observeTable(free_table)\nFree1 = res.map(\n  ({\n    A: X1,\n    B: X2,\n    C: X3,\n    D: X4,\n    E: X5,\n  }) =&gt;({\n    X1, \n    X2, \n    X3, \n    X4, \n    X5\n  })\n)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nExample code in the Free1 sheet in the Excel mapping file. You can edit this table.\n\n\n\n\n\n\n\n\n\n3.2 Generate crosstabs\nHere we’ll show some examples how you can generate tables along the y-axis of the crosstabs3:\n\ninputData = [\n  { Abbreviation: \"age\", Title: \"Age\", Type: \"cat\", RowVar: \"age\", MetrMac: \"S1M0\" },\n  { Abbreviation: \"fav_it\", Title: \"What`s your favorite Italian food?\", Type: \"mdg\", RowVar: \"q1_1 q1_2 q1_3\", MdgMissLab: \"No answer\", MetrMac: \"\" },\n  { Abbreviation: \"fav_de\", Title: \"What`s your favorite German food?\", Type: \"mcg\", RowVar: \"q2n1 q2n2 q2n3\", MetrMac: \"\" },\n  { Abbreviation: \"item_bat\", Title: \"How much do you agree?\", Type: \"mw\", RowVar: \"q3_1 q3_2\", \"Freq\": \"0\", MetrMac: \"\" },\n]\n\n\n\n\n\n\n\nFigure 1: Example of the Free1 sheet in the Excel mapping file\n\n\n\n\ntable = createTable(inputData, {headerEditable: true, appendRows: true})\nQuestions = observeTable(table)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nExample code in the Questions sheet in the Excel mapping file. You can edit this table.\nTo define the columns along the x-axis of the crosstabs, you just need to define a character vector of variable names in df. We will use the variable age_cat that we generated in Section 3.1:"
   },
   {
     "objectID": "datadaptor-crosstabser-table_charter-demo.html#sec-calc-ct",
     "href": "datadaptor-crosstabser-table_charter-demo.html#sec-calc-ct",
     "title": "datadaptor-crosstabser-table_charter-demo",
-    "section": "4 Calculate crosstabs",
-    "text": "4 Calculate crosstabs\nIf you have modified the input data above, running this cell will reprint3 the calculated crosstabs, and recalculate the according data input for the table_charter app at the bottom of this website:"
+    "section": "\n4 Calculate crosstabs",
+    "text": "4 Calculate crosstabs\nIf you have modified the input data above, running this cell will:\n\nexecute Mapping$modify_data() (as we pass df as the dat argument; see here), and\ncall Tabula$calc_qtabs().\n\nThe print() call then reprints4 the calculated crosstabs, and finally we recalculate the data input for the table_charter app in Section 5:"
   },
   {
     "objectID": "datadaptor-crosstabser-table_charter-demo.html#sec-tab-ch",
     "href": "datadaptor-crosstabser-table_charter-demo.html#sec-tab-ch",
     "title": "datadaptor-crosstabser-table_charter-demo",
-    "section": "5 table_charter",
-    "text": "5 table_charter\nThe table_charter app can be included in an html file by loading the package’s source code with for instance:\n\n&lt;script type=\"module\"&gt; \n  import { TableCharter } from \"https://unpkg.com/table_charter/dist/main.es.js\"\n&lt;/script&gt;\n\nand then adding a &lt;table-charter&gt; html tag with the crosstab data from R as its data attribute4:\n\n```{ojs}\n//| echo: fenced\nhtml`&lt;table-charter data='${data_string}'&gt;&lt;/table-charter&gt;`\n```"
+    "section": "\n5 table_charter",
+    "text": "5 table_charter\nThe table_charter app can be included in an html file by loading the package’s source code with for instance:\n\n&lt;script type=\"module\"&gt; \n  import { TableCharter } from \"https://unpkg.com/table_charter/dist/main.es.js\"\n&lt;/script&gt;\n\nand then adding a &lt;table-charter&gt; html tag with the crosstab data from R as its data attribute5:\n\n```{ojs}\n//| echo: fenced\nhtml`\n  &lt;table-charter data='${data_string}'&gt;&lt;/table-charter&gt;\n`\n```"
   },
   {
     "objectID": "datadaptor-crosstabser-table_charter-demo.html#footnotes",
     "href": "datadaptor-crosstabser-table_charter-demo.html#footnotes",
     "title": "datadaptor-crosstabser-table_charter-demo",
     "section": "Footnotes",
-    "text": "Footnotes\n\n\nThis website is built with the quarto-live extension and the webr wasm versions of the R packages from R-universe. If you install the R packages on your PC, the code runs much faster.↩︎\nThis table is automatically translated into the R data.frame dfq.↩︎\nUnlike this wasm version in your browser, running the crosstabser R package in RStudio will give you a color-formatted print output. The formatting also works in the R console on Linux, but not on Windows.↩︎\nHere we use observable’s hypertext literal to generate the html in a quarto ojs cell.↩︎"
+    "text": "Footnotes\n\nThis website is built with the quarto-live extension and the webr wasm versions of the R packages from R-universe. If you install the R packages on your PC, the code runs much faster.↩︎\nThis table is automatically translated into the R data.frame Free1 in Section 4.↩︎\nThis table is automatically translated into the R data.frame Questions in Section 4.↩︎\nUnlike this wasm version in your browser, running the crosstabser R package in RStudio will give you a color-formatted print output. The formatting also works in the R console on Linux, but not on Windows.↩︎\nHere we use observable’s hypertext literal to generate the html in a quarto ojs cell.↩︎"
   }
 ]
