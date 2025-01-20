@@ -45,14 +45,17 @@ We'll load some R packages:
 
 ```{r}
 #| eval: false
-library(datadaptor)
 library(crosstabser)
 library(haven)
 ```
 
 ## Survey data
 
-This is a toy example for survey data `df`. Typically, you would receive such data in an SPSS .sav file:
+<details>
+
+<summary>Click here to see / change the input data `df`</summary>
+
+This is a toy example for survey data `df`. In real life, you would typically receive such data in an SPSS .sav file:
 
 ```{webr}
 set.seed(123)
@@ -72,12 +75,14 @@ df <- tibble::tibble(
 df
 ```
 
+</details>
+
+## Using datadaptor & crosstabser
+
 ```{ojs}
 //| echo: false
 import {createTable, observeTable} from '@parlant/editable-table'
 ```
-
-## Using datadaptor & crosstabser
 
 The standard usage of datadaptor & crosstabser is with Excel files that can be created with `create_mapping()` & `create_tabula()`, respectively. In order to allow you to play around we use the following editable tables, instead of an Excel file. If you edit these tables, this will trigger a reactive update of the code cell in @sec-calc-ct.
 
@@ -133,7 +138,8 @@ Free1 <- Free1 |> dplyr::mutate(across(
 
 ### Generate crosstabs
 
-Here we'll show some examples how you can generate tables along the y-axis of the crosstabs[^3]:
+Here we'll show some examples how you can generate tables along the y-axis of the crosstabs.
+Please refer to [this article](https://urswilke.gitlab.io/crosstabser/articles/questions-parameters.html) for further explanation of the  arguments used in the column names:[^3]:
 
 [^3]: This table is automatically translated into the R data.frame `Questions` in @sec-calc-ct.
 
@@ -164,15 +170,17 @@ ColVar <- "age_cat"
 
 ## Calculate crosstabs {#sec-calc-ct}
 
-If you have modified the input data above, running this cell will:
+If you have modified the input data above, running the code in the next cell will automatically:
 
-* execute `Mapping$modify_data()` (as we pass `df` as the dat argument; see [here](https://urswilke.gitlab.io/crosstabser/reference/Tabula.html#method-new-)), and
-* call `Tabula$calc_qtabs()`.
+- execute [`Mapping$modify_data()`](https://urswilke.gitlab.io/datadaptor/reference/Mapping.html#method-modify-data-)[^4]; the resulting data will be stored in the `dat_mod` field, 
+- and then passed to [`Tabula$calc_qtabs()`](https://urswilke.gitlab.io/crosstabser/reference/Tabula.html#method-calc-qtabs-) to calculate the crosstabs.
 
-The `print()` call then reprints[^4] the calculated crosstabs, 
-and finally we recalculate the data input for the table_charter app in @sec-tab-ch:
+[^4]: as we pass `df` as the dat argument of the `Tabula` constructor, the
+`$modify_data()` method of its parent class is executed, see [here](https://urswilke.gitlab.io/crosstabser/reference/Tabula.html#method-new-).
 
-[^4]: Unlike this wasm version in your browser, running the crosstabser R package in RStudio will give you a color-formatted print output. The formatting also works in the R console on Linux, but not on Windows.
+The `print()` call then reprints[^5] the crosstabs, before it finally recalculates the data input for the table_charter app in @sec-tab-ch:
+
+[^5]: Unlike this wasm version in your browser, running the crosstabser R package in RStudio will give you a color-formatted print output. The formatting also works in the R console on Linux, but not on Windows.
 
 ```{webr}
 #| input:
@@ -211,9 +219,9 @@ The table_charter app can be included in an html file by loading the package's s
 </script>
 ```
 
-and then adding a `<table-charter>` html tag with the crosstab data from R as its data attribute[^5]:
+and then adding a `<table-charter>` html tag with the crosstab data from R as its data attribute[^6]:
 
-[^5]: Here we use [observable's hypertext literal](https://observablehq.com/@observablehq/htl) to generate the html in a quarto ojs cell.
+[^6]: Here we use [observable's hypertext literal](https://observablehq.com/@observablehq/htl) to generate the html in a quarto ojs cell.
 
 ```{ojs}
 //| echo: fenced
