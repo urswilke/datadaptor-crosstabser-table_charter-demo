@@ -141,10 +141,10 @@ Here we'll show some examples how you can generate tables along the y-axis of th
 //| echo: false
 //| fig-cap: "Example of the `Free1` sheet in the Excel mapping file"
 inputData = [
-  { Abbreviation: "age", Title: "Age", Type: "cat", RowVar: "age", MetrMac: "S1M0" },
-  { Abbreviation: "fav_it", Title: "What`s your favorite Italian food?", Type: "mdg", RowVar: "q1_1 q1_2 q1_3", MdgMissLab: "No answer", MetrMac: "" },
-  { Abbreviation: "fav_de", Title: "What`s your favorite German food?", Type: "mcg", RowVar: "q2n1 q2n2 q2n3", MetrMac: "" },
-  { Abbreviation: "item_bat", Title: "How much do you agree?", Type: "mw", RowVar: "q3_1 q3_2", "Freq": "0", MetrMac: "" },
+  { Title: "Age", Type: "cat", RowVar: "age", MetrMac: "S1M0" },
+  { Title: "What`s your favorite Italian food?", Type: "mdg", RowVar: "q1_1 q1_2 q1_3", MdgMissLab: "No answer", MetrMac: "" },
+  { Title: "What`s your favorite German food?", Type: "mcg", RowVar: "q2n1 q2n2 q2n3", MetrMac: "" },
+  { Title: "How much do you agree?", Type: "mw", RowVar: "q3_1 q3_2", "Freq": "0", MetrMac: "" },
 ]
 ```
 
