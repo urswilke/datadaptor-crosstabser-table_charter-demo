@@ -130,10 +130,16 @@ Free1 = res.map(
 #| echo: false
 #| input:
 #|   - Free1
-Free1 <- Free1 |> dplyr::mutate(across(
+#|   - Questions
+
+f <- function(x) {
+  x |> dplyr::mutate(across(
   everything(), 
   \(x) {x[x == ""] <- NA_character_; x}
 ))
+}
+Free1 <- Free1 |> f()
+Questions <- Questions |> f()
 ```
 
 ### Generate crosstabs
