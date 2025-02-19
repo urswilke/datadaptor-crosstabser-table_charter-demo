@@ -1,4 +1,4 @@
-td {
+th, td {
   border: 1px solid;
   border-collapse: collapse;
   padding: 5px;
@@ -12,4 +12,8 @@ table-charter {
   Otherwise the table-charter color setting according to
   prefered dark/light mode of the user can clash with table-charter settings*/
   color: #888;
+}
+.max-output-height > div > div > div:nth-child(3) {
+  max-height: 70vh;
+  overflow-y: scroll;
 }
