@@ -306,6 +306,12 @@ m <- Tabula$new(
 
 print(m)
 
+# If you're only interested in datadaptor, 
+# you can see the result of its data modifications 
+# by uncommenting the following line.
+# (or simply by looking at the `dat_mod` field that's also generated in `m`)
+# datadaptor::Mapping$new(df, mapping_file)$modify_data()$dat_mod
+
 data_string <- m$get_crosstabs_data() |> gen_data_json()
 ```
 
