@@ -367,7 +367,7 @@ Note
 
 </div>
 <script type="webr-1-contents">
-eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWUsInBlcnNpc3QiOnRydWV9LCJjb2RlIjoiaW5zdGFsbC5wYWNrYWdlcygnY3Jvc3N0YWJzZXInLCByZXBvcyA9IGMoJ2h0dHBzOi8vdXJzd2lsa2Uuci11bml2ZXJzZS5kZXYnLCAnaHR0cHM6Ly9yZXBvLnItd2FzbS5vcmcnKSlcblxuZGYgPC0gZGF0YWRhcHRvcjo6ZnJ1aXRfc3VydmV5XG5kZiJ9
+eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWUsInBlcnNpc3QiOnRydWV9LCJjb2RlIjoiZGYgPC0gZGF0YWRhcHRvcjo6ZnJ1aXRfc3VydmV5XG5kZiJ9
 </script>
 </div>
 </div>
@@ -412,9 +412,9 @@ eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWUsInBlcnNpc3QiOnRy
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb3" data-startfrom="165" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 164;"><span id="cb3-165"><a href="#cb3-165" aria-hidden="true" tabindex="-1"></a>variables_arr <span class="op">=</span> <span class="fu">transpose</span>(Variables_orig)</span>
-<span id="cb3-166"><a href="#cb3-166" aria-hidden="true" tabindex="-1"></a>variables_table <span class="op">=</span> <span class="fu">createTable</span>(variables_arr<span class="op">,</span> {<span class="dt">headerEditable</span><span class="op">:</span> <span class="kw">false</span><span class="op">,</span> <span class="dt">appendRows</span><span class="op">:</span> <span class="kw">true</span>})</span>
-<span id="cb3-167"><a href="#cb3-167" aria-hidden="true" tabindex="-1"></a>Variables <span class="op">=</span> <span class="fu">observeTable</span>(variables_table)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb3" data-startfrom="163" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 162;"><span id="cb3-163"><a href="#cb3-163" aria-hidden="true" tabindex="-1"></a>variables_arr <span class="op">=</span> <span class="fu">transpose</span>(Variables_orig)</span>
+<span id="cb3-164"><a href="#cb3-164" aria-hidden="true" tabindex="-1"></a>variables_table <span class="op">=</span> <span class="fu">createTable</span>(variables_arr<span class="op">,</span> {<span class="dt">headerEditable</span><span class="op">:</span> <span class="kw">false</span><span class="op">,</span> <span class="dt">appendRows</span><span class="op">:</span> <span class="kw">true</span>})</span>
+<span id="cb3-165"><a href="#cb3-165" aria-hidden="true" tabindex="-1"></a>Variables <span class="op">=</span> <span class="fu">observeTable</span>(variables_table)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <div id="ojs-cell-2-1" data-nodetype="declaration">
@@ -440,20 +440,20 @@ eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWUsInBlcnNpc3QiOnRy
 </div>
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb4" data-startfrom="179" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 178;"><span id="cb4-179"><a href="#cb4-179" aria-hidden="true" tabindex="-1"></a>label_arr <span class="op">=</span> <span class="fu">transpose</span>(Label_orig)</span>
-<span id="cb4-180"><a href="#cb4-180" aria-hidden="true" tabindex="-1"></a>label_table <span class="op">=</span> <span class="fu">createTable</span>(label_arr<span class="op">,</span> {<span class="dt">headerEditable</span><span class="op">:</span> <span class="kw">false</span><span class="op">,</span> <span class="dt">appendRows</span><span class="op">:</span> <span class="kw">true</span>})</span>
-<span id="cb4-181"><a href="#cb4-181" aria-hidden="true" tabindex="-1"></a>res_label <span class="op">=</span> <span class="fu">observeTable</span>(label_table)</span>
-<span id="cb4-182"><a href="#cb4-182" aria-hidden="true" tabindex="-1"></a>Label <span class="op">=</span> res_label<span class="op">.</span><span class="fu">map</span>(</span>
-<span id="cb4-183"><a href="#cb4-183" aria-hidden="true" tabindex="-1"></a>  ({</span>
-<span id="cb4-184"><a href="#cb4-184" aria-hidden="true" tabindex="-1"></a>    nv<span class="op">,</span></span>
-<span id="cb4-185"><a href="#cb4-185" aria-hidden="true" tabindex="-1"></a>    sum_var_value<span class="op">,</span></span>
-<span id="cb4-186"><a href="#cb4-186" aria-hidden="true" tabindex="-1"></a>    <span class="op">...</span>rest</span>
-<span id="cb4-187"><a href="#cb4-187" aria-hidden="true" tabindex="-1"></a>  }) <span class="kw">=&gt;</span>({</span>
-<span id="cb4-188"><a href="#cb4-188" aria-hidden="true" tabindex="-1"></a>    <span class="dt">nv</span><span class="op">:</span> <span class="bu">Number</span>(nv)<span class="op">,</span></span>
-<span id="cb4-189"><a href="#cb4-189" aria-hidden="true" tabindex="-1"></a>    <span class="dt">sum_var_value</span><span class="op">:</span> <span class="bu">Number</span>(sum_var_value)<span class="op">,</span></span>
-<span id="cb4-190"><a href="#cb4-190" aria-hidden="true" tabindex="-1"></a>    <span class="op">...</span>rest</span>
-<span id="cb4-191"><a href="#cb4-191" aria-hidden="true" tabindex="-1"></a>  })</span>
-<span id="cb4-192"><a href="#cb4-192" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb4" data-startfrom="177" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 176;"><span id="cb4-177"><a href="#cb4-177" aria-hidden="true" tabindex="-1"></a>label_arr <span class="op">=</span> <span class="fu">transpose</span>(Label_orig)</span>
+<span id="cb4-178"><a href="#cb4-178" aria-hidden="true" tabindex="-1"></a>label_table <span class="op">=</span> <span class="fu">createTable</span>(label_arr<span class="op">,</span> {<span class="dt">headerEditable</span><span class="op">:</span> <span class="kw">false</span><span class="op">,</span> <span class="dt">appendRows</span><span class="op">:</span> <span class="kw">true</span>})</span>
+<span id="cb4-179"><a href="#cb4-179" aria-hidden="true" tabindex="-1"></a>res_label <span class="op">=</span> <span class="fu">observeTable</span>(label_table)</span>
+<span id="cb4-180"><a href="#cb4-180" aria-hidden="true" tabindex="-1"></a>Label <span class="op">=</span> res_label<span class="op">.</span><span class="fu">map</span>(</span>
+<span id="cb4-181"><a href="#cb4-181" aria-hidden="true" tabindex="-1"></a>  ({</span>
+<span id="cb4-182"><a href="#cb4-182" aria-hidden="true" tabindex="-1"></a>    nv<span class="op">,</span></span>
+<span id="cb4-183"><a href="#cb4-183" aria-hidden="true" tabindex="-1"></a>    sum_var_value<span class="op">,</span></span>
+<span id="cb4-184"><a href="#cb4-184" aria-hidden="true" tabindex="-1"></a>    <span class="op">...</span>rest</span>
+<span id="cb4-185"><a href="#cb4-185" aria-hidden="true" tabindex="-1"></a>  }) <span class="kw">=&gt;</span>({</span>
+<span id="cb4-186"><a href="#cb4-186" aria-hidden="true" tabindex="-1"></a>    <span class="dt">nv</span><span class="op">:</span> <span class="bu">Number</span>(nv)<span class="op">,</span></span>
+<span id="cb4-187"><a href="#cb4-187" aria-hidden="true" tabindex="-1"></a>    <span class="dt">sum_var_value</span><span class="op">:</span> <span class="bu">Number</span>(sum_var_value)<span class="op">,</span></span>
+<span id="cb4-188"><a href="#cb4-188" aria-hidden="true" tabindex="-1"></a>    <span class="op">...</span>rest</span>
+<span id="cb4-189"><a href="#cb4-189" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb4-190"><a href="#cb4-190" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <div id="ojs-cell-3-1" data-nodetype="declaration">
@@ -486,24 +486,24 @@ eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWUsInBlcnNpc3QiOnRy
 </div>
 <div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb5" data-startfrom="204" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 203;"><span id="cb5-204"><a href="#cb5-204" aria-hidden="true" tabindex="-1"></a>Free1_arr <span class="op">=</span> <span class="fu">transpose</span>(Free1_orig)</span>
-<span id="cb5-205"><a href="#cb5-205" aria-hidden="true" tabindex="-1"></a>Free1_table <span class="op">=</span> <span class="fu">createTable</span>(Free1_arr<span class="op">,</span> {<span class="dt">headerEditable</span><span class="op">:</span> <span class="kw">false</span><span class="op">,</span> <span class="dt">appendRows</span><span class="op">:</span> <span class="kw">true</span>})</span>
-<span id="cb5-206"><a href="#cb5-206" aria-hidden="true" tabindex="-1"></a>res_Free1 <span class="op">=</span> <span class="fu">observeTable</span>(Free1_table)</span>
-<span id="cb5-207"><a href="#cb5-207" aria-hidden="true" tabindex="-1"></a>Free1 <span class="op">=</span> res_Free1<span class="op">.</span><span class="fu">map</span>(</span>
-<span id="cb5-208"><a href="#cb5-208" aria-hidden="true" tabindex="-1"></a>  ({</span>
-<span id="cb5-209"><a href="#cb5-209" aria-hidden="true" tabindex="-1"></a>    <span class="dt">A</span><span class="op">:</span> X1<span class="op">,</span></span>
-<span id="cb5-210"><a href="#cb5-210" aria-hidden="true" tabindex="-1"></a>    <span class="dt">B</span><span class="op">:</span> X2<span class="op">,</span></span>
-<span id="cb5-211"><a href="#cb5-211" aria-hidden="true" tabindex="-1"></a>    <span class="dt">C</span><span class="op">:</span> X3<span class="op">,</span></span>
-<span id="cb5-212"><a href="#cb5-212" aria-hidden="true" tabindex="-1"></a>    <span class="dt">D</span><span class="op">:</span> X4<span class="op">,</span></span>
-<span id="cb5-213"><a href="#cb5-213" aria-hidden="true" tabindex="-1"></a>    <span class="dt">E</span><span class="op">:</span> X5<span class="op">,</span></span>
-<span id="cb5-214"><a href="#cb5-214" aria-hidden="true" tabindex="-1"></a>  }) <span class="kw">=&gt;</span>({</span>
-<span id="cb5-215"><a href="#cb5-215" aria-hidden="true" tabindex="-1"></a>    X1<span class="op">,</span> </span>
-<span id="cb5-216"><a href="#cb5-216" aria-hidden="true" tabindex="-1"></a>    X2<span class="op">,</span> </span>
-<span id="cb5-217"><a href="#cb5-217" aria-hidden="true" tabindex="-1"></a>    X3<span class="op">,</span> </span>
-<span id="cb5-218"><a href="#cb5-218" aria-hidden="true" tabindex="-1"></a>    X4<span class="op">,</span> </span>
-<span id="cb5-219"><a href="#cb5-219" aria-hidden="true" tabindex="-1"></a>    X5</span>
-<span id="cb5-220"><a href="#cb5-220" aria-hidden="true" tabindex="-1"></a>  })</span>
-<span id="cb5-221"><a href="#cb5-221" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb5" data-startfrom="202" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 201;"><span id="cb5-202"><a href="#cb5-202" aria-hidden="true" tabindex="-1"></a>Free1_arr <span class="op">=</span> <span class="fu">transpose</span>(Free1_orig)</span>
+<span id="cb5-203"><a href="#cb5-203" aria-hidden="true" tabindex="-1"></a>Free1_table <span class="op">=</span> <span class="fu">createTable</span>(Free1_arr<span class="op">,</span> {<span class="dt">headerEditable</span><span class="op">:</span> <span class="kw">false</span><span class="op">,</span> <span class="dt">appendRows</span><span class="op">:</span> <span class="kw">true</span>})</span>
+<span id="cb5-204"><a href="#cb5-204" aria-hidden="true" tabindex="-1"></a>res_Free1 <span class="op">=</span> <span class="fu">observeTable</span>(Free1_table)</span>
+<span id="cb5-205"><a href="#cb5-205" aria-hidden="true" tabindex="-1"></a>Free1 <span class="op">=</span> res_Free1<span class="op">.</span><span class="fu">map</span>(</span>
+<span id="cb5-206"><a href="#cb5-206" aria-hidden="true" tabindex="-1"></a>  ({</span>
+<span id="cb5-207"><a href="#cb5-207" aria-hidden="true" tabindex="-1"></a>    <span class="dt">A</span><span class="op">:</span> X1<span class="op">,</span></span>
+<span id="cb5-208"><a href="#cb5-208" aria-hidden="true" tabindex="-1"></a>    <span class="dt">B</span><span class="op">:</span> X2<span class="op">,</span></span>
+<span id="cb5-209"><a href="#cb5-209" aria-hidden="true" tabindex="-1"></a>    <span class="dt">C</span><span class="op">:</span> X3<span class="op">,</span></span>
+<span id="cb5-210"><a href="#cb5-210" aria-hidden="true" tabindex="-1"></a>    <span class="dt">D</span><span class="op">:</span> X4<span class="op">,</span></span>
+<span id="cb5-211"><a href="#cb5-211" aria-hidden="true" tabindex="-1"></a>    <span class="dt">E</span><span class="op">:</span> X5<span class="op">,</span></span>
+<span id="cb5-212"><a href="#cb5-212" aria-hidden="true" tabindex="-1"></a>  }) <span class="kw">=&gt;</span>({</span>
+<span id="cb5-213"><a href="#cb5-213" aria-hidden="true" tabindex="-1"></a>    X1<span class="op">,</span> </span>
+<span id="cb5-214"><a href="#cb5-214" aria-hidden="true" tabindex="-1"></a>    X2<span class="op">,</span> </span>
+<span id="cb5-215"><a href="#cb5-215" aria-hidden="true" tabindex="-1"></a>    X3<span class="op">,</span> </span>
+<span id="cb5-216"><a href="#cb5-216" aria-hidden="true" tabindex="-1"></a>    X4<span class="op">,</span> </span>
+<span id="cb5-217"><a href="#cb5-217" aria-hidden="true" tabindex="-1"></a>    X5</span>
+<span id="cb5-218"><a href="#cb5-218" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb5-219"><a href="#cb5-219" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <div id="ojs-cell-4-1" data-nodetype="declaration">
@@ -536,9 +536,9 @@ eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWUsInBlcnNpc3QiOnRy
 </div>
 <div id="tabset-1-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-4-tab">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb6" data-startfrom="233" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 232;"><span id="cb6-233"><a href="#cb6-233" aria-hidden="true" tabindex="-1"></a>Questions_arr <span class="op">=</span> <span class="fu">transpose</span>(Questions_orig)</span>
-<span id="cb6-234"><a href="#cb6-234" aria-hidden="true" tabindex="-1"></a>Questions_table <span class="op">=</span> <span class="fu">createTable</span>(Questions_arr<span class="op">,</span> {<span class="dt">headerEditable</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span> <span class="dt">appendRows</span><span class="op">:</span> <span class="kw">true</span>})</span>
-<span id="cb6-235"><a href="#cb6-235" aria-hidden="true" tabindex="-1"></a>Questions <span class="op">=</span> <span class="fu">observeTable</span>(Questions_table)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb6" data-startfrom="231" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 230;"><span id="cb6-231"><a href="#cb6-231" aria-hidden="true" tabindex="-1"></a>Questions_arr <span class="op">=</span> <span class="fu">transpose</span>(Questions_orig)</span>
+<span id="cb6-232"><a href="#cb6-232" aria-hidden="true" tabindex="-1"></a>Questions_table <span class="op">=</span> <span class="fu">createTable</span>(Questions_arr<span class="op">,</span> {<span class="dt">headerEditable</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span> <span class="dt">appendRows</span><span class="op">:</span> <span class="kw">true</span>})</span>
+<span id="cb6-233"><a href="#cb6-233" aria-hidden="true" tabindex="-1"></a>Questions <span class="op">=</span> <span class="fu">observeTable</span>(Questions_table)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <div id="ojs-cell-5-1" data-nodetype="declaration">

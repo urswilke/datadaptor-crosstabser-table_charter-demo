@@ -72,8 +72,6 @@ In real life, you would typically receive such data in an SPSS .sav file:
 
 ```{webr}
 #| persist: true
-install.packages('crosstabser', repos = c('https://urswilke.r-universe.dev', 'https://repo.r-wasm.org'))
-
 df <- datadaptor::fruit_survey
 df
 ```
